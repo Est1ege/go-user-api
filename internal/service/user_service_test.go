@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"github.com/yourusername/go-user-api/internal/domain/models"
+	"github.com/Est1ege/go-user-api/internal/domain/models"
 )
 
 // Создаем мок для UserRepository

@@ -20,18 +20,18 @@ type User struct {
 
 // CreateUserInput определяет структуру для создания пользователя
 type CreateUserInput struct {
-	Email     string `json:"email" binding:"required,email"`
-	FirstName string `json:"first_name" binding:"required"`
-	LastName  string `json:"last_name" binding:"required"`
-	Password  string `json:"password" binding:"required,min=8"`
+	Email     string `json:"email" form:"email" binding:"required,email"`
+	FirstName string `json:"first_name" form:"first_name" binding:"required"`
+	LastName  string `json:"last_name" form:"last_name" binding:"required"`
+	Password  string `json:"password" form:"password" binding:"required,min=8"`
 }
 
 // UpdateUserInput определяет структуру для обновления данных пользователя
 type UpdateUserInput struct {
-	Email     string `json:"email" binding:"omitempty,email"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Password  string `json:"password" binding:"omitempty,min=8"`
+    Email     string `json:"email" form:"email" binding:"omitempty,email"`
+    FirstName string `json:"first_name" form:"first_name"`
+    LastName  string `json:"last_name" form:"last_name"`
+    Password  string `json:"password" form:"password" binding:"omitempty,min=8"`
 }
 
 // BeforeCreate - хук GORM, который выполняется перед созданием записи

@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"log"
+    "os"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
@@ -32,8 +34,13 @@ func SetupRouter(userHandler *handlers.UserHandler, webHandler *handlers.WebHand
 	})
 	
 	// Загрузка шаблонов
-	router.LoadHTMLGlob("templates/**/*")
 	
+	pwd, _ := os.Getwd()
+	log.Printf("Current working directory: %s", pwd)
+	templatePath := "templates/users/*.html"
+	log.Printf("Loading templates from: %s", templatePath)
+	router.LoadHTMLGlob(templatePath)
+
 	// API v1
 	v1 := router.Group("/api/v1")
 	{
