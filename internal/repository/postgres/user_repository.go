@@ -2,11 +2,14 @@ package postgres
 
 import (
 	"errors"
-
 	"github.com/google/uuid"
 	"github.com/Est1ege/go-user-api/internal/domain/models"
+	"github.com/Est1ege/go-user-api/internal/repository"
 	"gorm.io/gorm"
 )
+
+// Убедимся что UserRepository реализует интерфейс repository.UserRepository
+var _ repository.UserRepository = (*UserRepository)(nil)
 
 // UserRepository представляет интерфейс для работы с пользователями в БД
 type UserRepository struct {

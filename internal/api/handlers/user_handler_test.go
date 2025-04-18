@@ -21,6 +21,18 @@ type MockUserService struct {
 	mock.Mock
 }
 
+func (m *MockUserService) GetAll() ([]*models.User, error) {
+    args := m.Called()
+    if args.Get(0) == nil {
+        return nil, args.Error(1)
+    }
+    return args.Get(0).([]*models.User), args.Error(1)
+}
+
+// Убедимся что MockUserService реализует service.UserServiceInterface
+var _ service.UserServiceInterface = (*MockUserService)(nil)
+
+
 func (m *MockUserService) Create(input models.CreateUserInput) (*models.User, error) {
 	args := m.Called(input)
 	if args.Get(0) == nil {
@@ -29,7 +41,7 @@ func (m *MockUserService) Create(input models.CreateUserInput) (*models.User, er
 	return args.Get(0).(*models.User), args.Error(1)
 }
 
-func (m *MockUserService) GetByID(id uuid.UUID) (*models.User, error) {
+func (m *MockUserService) GetByID(id uuid.UUID)  (*models.User, error) {
 	args := m.Called(id)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)

@@ -9,14 +9,16 @@ import (
 	"github.com/Est1ege/go-user-api/internal/service"
 )
 
-// UserHandler представляет обработчики для API пользователей
+// UserHandler обрабатывает HTTP-запросы для пользователей
 type UserHandler struct {
-	userService *service.UserService
+	userService service.UserServiceInterface
 }
 
 // NewUserHandler создает новый экземпляр UserHandler
-func NewUserHandler(userService *service.UserService) *UserHandler {
-	return &UserHandler{userService: userService}
+func NewUserHandler(userService service.UserServiceInterface) *UserHandler {
+	return &UserHandler{
+		userService: userService,
+	}
 }
 
 // Create обрабатывает POST /users

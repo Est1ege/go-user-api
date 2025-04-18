@@ -4,19 +4,30 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"github.com/Est1ege/go-user-api/internal/domain/models"
-	"github.com/Est1ege/go-user-api/internal/repository/postgres"
+	"github.com/Est1ege/go-user-api/internal/repository"
 	"golang.org/x/crypto/bcrypt"
 )
 
+// UserServiceInterface определяет интерфейс сервиса пользователя
+type UserServiceInterface interface {
+	Create(input models.CreateUserInput) (*models.User, error)
+	GetByID(id uuid.UUID) (*models.User, error)
+	Update(id uuid.UUID, input models.UpdateUserInput) (*models.User, error)
+	Delete(id uuid.UUID) error
+	GetAll() ([]*models.User, error)
+}
+
 // UserService представляет сервис для работы с пользователями
 type UserService struct {
-	userRepo *postgres.UserRepository
+	userRepo repository.UserRepository
 }
 
 // NewUserService создает новый экземпляр UserService
-func NewUserService(userRepo *postgres.UserRepository) *UserService {
+func NewUserService(userRepo repository.UserRepository) *UserService {
 	return &UserService{userRepo: userRepo}
 }
+
+var _ UserServiceInterface = (*UserService)(nil)
 
 // Create создает нового пользователя
 func (s *UserService) Create(input models.CreateUserInput) (*models.User, error) {

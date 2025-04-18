@@ -8,11 +8,22 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/Est1ege/go-user-api/internal/domain/models"
+	"github.com/Est1ege/go-user-api/internal/repository"
 )
 
 // Создаем мок для UserRepository
 type MockUserRepository struct {
 	mock.Mock
+}
+
+var _ repository.UserRepository = (*MockUserRepository)(nil)
+
+func (m *MockUserRepository) GetAll() ([]*models.User, error) {
+    args := m.Called()
+    if args.Get(0) == nil {
+        return nil, args.Error(1)
+    }
+    return args.Get(0).([]*models.User), args.Error(1)
 }
 
 func (m *MockUserRepository) Create(user *models.User) error {
